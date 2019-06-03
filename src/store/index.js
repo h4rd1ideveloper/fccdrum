@@ -6,13 +6,15 @@ const INITIAL_STATE = {
     currentPadBank: bankOne,
     currentPadBankId: 'Heater Kit',
     sliderVal: 0.3,
+    textColor:'white'
 };
 const Types = {
     pc: 'powerControl',
     sb: 'selectBank',
     dn: 'displayClipName',
     av: 'adjustVolume',
-    cd: 'clearDisplay'
+    cd: 'clearDisplay',
+    tx: 'textColor'
 }
 export const functionsToDispatch = {
     powerControl: function () {
@@ -43,6 +45,12 @@ export const functionsToDispatch = {
             payload: String.fromCharCode(160)
         }
     },
+    setTextColor: function (color){
+        return {
+            type: Types.tx,
+            payload: color
+        }
+    }
 
 
 }
@@ -75,7 +83,11 @@ function reducer(state, action) {
             ...state,
             display: action.payload
         }
-        default: return state;
+        case Types.tx: return {
+            ...state,
+            textColor: action.payload
+        }
+        default: return {...state};
     }
 }
 export function Store({ children }) {
